@@ -1,0 +1,23 @@
+{%extends "template.html"%}
+{%block content%}
+        <table class="table table-striped table-responsive table-bordered">
+            <thead class="thead-default">
+                <tr>
+                    <th>Nome</th>
+                    <th>Telefone</th>
+                    <th>Endereço</th>
+                    <th>Ativo</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for cliente in clientes %}
+                <tr>
+                    <td>{{cliente.nome}}</td>
+                    <td>{{cliente.telefone}}</td>
+                    <td>{{cliente.endereco}}</td>
+                    <td>{{cliente.habilitado}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+{%endblock%}
