@@ -1,42 +1,42 @@
-from jogoteca import Jogo, Usuario
+from clientes import Cliente, Usuario
 
-SQL_DELETA_JOGO = 'delete from jogo where id = %s'
-SQL_JOGO_POR_ID = 'SELECT id, nome, categoria, console from jogo where id = %s'
+SQL_DELETA_Cliente = 'delete from Cliente where id = %s'
+SQL_Cliente_POR_ID = 'SELECT id, nome, telefone, endereco, ativo from Cliente where id = %s'
 SQL_USUARIO_POR_ID = 'SELECT id, nome, senha from usuario where id = %s'
-SQL_ATUALIZA_JOGO = 'UPDATE jogo SET nome=%s, categoria=%s, console=%s where id = %s'
-SQL_BUSCA_JOGOS = 'SELECT id, nome, categoria, console from jogo'
-SQL_CRIA_JOGO = 'INSERT into jogo (nome, categoria, console) values (%s, %s, %s)'
+SQL_ATUALIZA_Cliente = 'UPDATE Cliente SET nome=%s, telefone=%s, endereco=%s, ativo=%s where id = %s'
+SQL_BUSCA_ClienteS = 'SELECT id, nome, telefone, endereco, ativo from Cliente'
+SQL_CRIA_Cliente = 'INSERT into Cliente (nome, telefone, endereco, ativo) values (%s, %s, %s, %s)'
 
 
-class JogoDao:
+class ClienteDao:
     def __init__(self, db):
         self.__db = db
 
-    def salvar(self, jogo):
+    def salvar(self, Cliente):
         cursor = self.__db.connection.cursor()
 
-        if (jogo.id):
-            cursor.execute(SQL_ATUALIZA_JOGO, (jogo.nome, jogo.categoria, jogo.console, jogo.id))
+        if (Cliente.id):
+            cursor.execute(SQL_ATUALIZA_Cliente, (Cliente.nome, Cliente.telefone, Cliente.endereco, Cliente.ativo, Cliente.id))
         else:
-            cursor.execute(SQL_CRIA_JOGO, (jogo.nome, jogo.categoria, jogo.console))
-            jogo.id = cursor.lastrowid
+            cursor.execute(SQL_CRIA_Cliente, (Cliente.nome, Cliente.telefone, Cliente.endereco, Cliente.ativo))
+            Cliente.id = cursor.lastrowid
         self.__db.connection.commit()
-        return jogo
+        return Cliente
 
     def listar(self):
         cursor = self.__db.connection.cursor()
-        cursor.execute(SQL_BUSCA_JOGOS)
-        jogos = traduz_jogos(cursor.fetchall())
-        return jogos
+        cursor.execute(SQL_BUSCA_ClienteS)
+        Clientes = traduz_Clientes(cursor.fetchall())
+        return Clientes
 
     def busca_por_id(self, id):
         cursor = self.__db.connection.cursor()
-        cursor.execute(SQL_JOGO_POR_ID, (id,))
+        cursor.execute(SQL_Cliente_POR_ID, (id,))
         tupla = cursor.fetchone()
-        return Jogo(tupla[1], tupla[2], tupla[3], id=tupla[0])
+        return Cliente(tupla[1], tupla[2], tupla[3], tupla[4], id=tupla[0])
 
     def deletar(self, id):
-        self.__db.connection.cursor().execute(SQL_DELETA_JOGO, (id, ))
+        self.__db.connection.cursor().execute(SQL_DELETA_Cliente, (id, ))
         self.__db.connection.commit()
 
 
@@ -52,10 +52,10 @@ class UsuarioDao:
         return usuario
 
 
-def traduz_jogos(jogos):
-    def cria_jogo_com_tupla(tupla):
-        return Jogo(tupla[1], tupla[2], tupla[3], id=tupla[0])
-    return list(map(cria_jogo_com_tupla, jogos))
+def traduz_Clientes(Clientes):
+    def cria_Cliente_com_tupla(tupla):
+        return Cliente(tupla[1], tupla[2], tupla[3], tupla[4], id=tupla[0])
+    return list(map(cria_Cliente_com_tupla, Clientes))
 
 
 def traduz_usuario(tupla):
