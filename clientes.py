@@ -1,34 +1,24 @@
 from flask import Flask, render_template, request, redirect, session, flash, url_for
+from models import Cliente, Usuario
+from dao import ClienteDao, UsuarioDao
+from flask_mysqldb import MySQL
 
 app = Flask(__name__)
-
 app.secret_key = 'Fadergs'
 
-class Cliente:
-    def __init__(self, nome, telefone, endereco, habilitado):
-        self.nome = nome
-        self.telefone = telefone
-        self.endereco = endereco
-        self.habilitado = habilitado
+app.config['MYSQL_HOST'] = "0.0.0.0"
+app.config['MYSQL_USER'] = "root"
+app.config['MYSQL_PASSWORD'] = "totvs@123"
+app.config['MYSQL_DB'] = "clientes"
+app.config['MYSQL_PORT'] = 3306
+db=MySQL(app)
 
-class Usuario:
-    def __init__(self, id, nome, senha):
-        self.id = id
-        self.nome = nome
-        self.senha = senha
-
-usuario1 = Usuario('vinicius', 'vinicius bonilha', '1234')
-usuario2 = Usuario('juliana', 'Juliana Martins', '12345')
-
-usuarios = {usuario1.id: usuario1, usuario2: usuario2}
-
-vinicius = Cliente('Vinicius', '444','av terra nova', 'True')
-juliana = Cliente('Juliana', '555','av terra nova', 'True')
-ellen = Cliente('Ellen', '666','av terra nova', 'True')
-lista = [vinicius,juliana,ellen]
+cliente_dao = ClienteDao(db)
+usuario_dao = UsuarioDao(db)
 
 @app.route('/')
 def index():
+    lista=cliente_dao.listar()
     return render_template('lista.html', titulo='Clientes', clientes=lista)
 
 @app.route('/novo')
@@ -42,9 +32,9 @@ def criar():
     nome = request.form['nome']
     telefone = request.form['telefone']
     endereco = request.form['endereco']
-    habilitado = request.form['habilitado']
-    cliente = Cliente(nome, telefone, endereco, habilitado)
-    lista.append(cliente)
+    ativo = request.form['ativo']
+    cliente = Cliente(nome, telefone, endereco, ativo)
+    cliente_dao.salvar(cliente)
     return redirect(url_for('index'))
 
 
@@ -55,8 +45,8 @@ def login():
 
 @app.route('/autenticar', methods=['POST'])
 def autenticar():
-    if request.form['usuario'] in usuarios:
-        usuario = usuarios[request.form['usuario']]
+    usuario = usuario_dao.buscar_por_id(request.form['usuario'])
+    if usuario:
         if usuario.senha == request.form['senha']:
             session['usuario_logado'] = usuario.id
             flash(usuario.nome + ' Logado com sucesso')

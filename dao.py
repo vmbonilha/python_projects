@@ -1,11 +1,11 @@
-from clientes import Cliente, Usuario
+from models import Cliente, Usuario
 
-SQL_DELETA_Cliente = 'delete from Cliente where id = %s'
-SQL_Cliente_POR_ID = 'SELECT id, nome, telefone, endereco, ativo from Cliente where id = %s'
+SQL_DELETA_Cliente = 'delete from cliente where id = %s'
+SQL_Cliente_POR_ID = 'SELECT id, nome, telefone, endereco, ativo from cliente where id = %s'
 SQL_USUARIO_POR_ID = 'SELECT id, nome, senha from usuario where id = %s'
-SQL_ATUALIZA_Cliente = 'UPDATE Cliente SET nome=%s, telefone=%s, endereco=%s, ativo=%s where id = %s'
-SQL_BUSCA_ClienteS = 'SELECT id, nome, telefone, endereco, ativo from Cliente'
-SQL_CRIA_Cliente = 'INSERT into Cliente (nome, telefone, endereco, ativo) values (%s, %s, %s, %s)'
+SQL_ATUALIZA_Cliente = 'UPDATE cliente SET nome=%s, telefone=%s, endereco=%s, ativo=%s where id = %s'
+SQL_BUSCA_ClienteS = 'SELECT id, nome, telefone, endereco, ativo from cliente'
+SQL_CRIA_Cliente = 'INSERT into cliente (nome, telefone, endereco, ativo) values (%s, %s, %s, %s)'
 
 
 class ClienteDao:
