@@ -19,8 +19,9 @@
                     <td>{{cliente.endereco}}</td>
                     <td>{{cliente.ativo}}</td>
                     <td>
-                        <a href="{{ url_for('editar', id=cliente.id) }}">Editar</a></a>
-                        <a href="{{ url_for('deletar', id=cliente.id) }}">Deletar</a></a>
+                        <a href="{{ url_for('editar', id=cliente.id) }}">Editar</a>
+                        <a href="{{ url_for('deletar', id=cliente.id) }}">Deletar</a>
+                        <a href="{{ url_for('export', id=cliente.id) }}">Exportar</a>
                     </td>
                 </tr>
                 {% endfor %}

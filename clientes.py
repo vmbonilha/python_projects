@@ -95,21 +95,14 @@ def logout():
 @app.route('/uploads/<nome_arquivo>')
 def imagem(nome_arquivo):
     return send_from_directory('uploads',nome_arquivo)
-
+    
 @app.route('/export', methods=['GET'])
 def export():
-    #si = io.StringIO.StringIO()
     si = StringIO()
     cw = csv.writer(si)
-    cliente = cliente_dao.listar()
-    #c = g.db.cursor()
-    #c.execute('SELECT * FROM cliente')
-    #rows = c.fetchall()
-    #cw.writerow([i[0] for i in c.description])
-    cw.writerow([i[0] for i in cliente])
-    #cw.writerows(cliente)
-    cw.writerow(cliente)
-    #cw.writerows(cliente)
+    lista = cliente_dao.listar()
+    #cw.writerow([i[0] for i in lista])
+    cw.writerow(lista)
     response = make_response(si.getvalue())
     response.headers['Content-Disposition'] = 'attachment; filename=report.csv'
     response.headers["Content-type"] = "text/csv"
