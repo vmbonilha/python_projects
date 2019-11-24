@@ -3,8 +3,8 @@ print('Conectando...')
 conn = MySQLdb.connect(user='root', passwd='totvs@123', host='127.0.0.1', port=3306)
 
 # Descomente se quiser desfazer o banco...
-conn.cursor().execute("DROP DATABASE `clientes`;")
-conn.commit()
+#conn.cursor().execute("DROP DATABASE `clientes`;")
+#conn.commit()
 
 criar_tabelas = '''SET NAMES utf8;
     CREATE DATABASE `clientes` /*!40100 DEFAULT CHARACTER SET utf8 COLLATE utf8_bin */;
