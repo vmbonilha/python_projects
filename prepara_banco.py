@@ -12,7 +12,7 @@ criar_tabelas = '''SET NAMES utf8;
     CREATE TABLE `cliente` (
       `id` int(11) NOT NULL AUTO_INCREMENT,
       `nome` varchar(50) COLLATE utf8_bin NOT NULL,
-      `telefone` varchar(10) COLLATE utf8_bin NOT NULL,
+      `telefone` int(12) COLLATE utf8_bin NOT NULL,
       `endereco` varchar(30) NOT NULL,
       `ativo` boolean,
       PRIMARY KEY (`id`)
@@ -41,17 +41,17 @@ print(' -------------  Usuários:  -------------')
 for user in cursor.fetchall():
     print(user[1])
 
-# inserindo jogos
+# inserindo clientes
 cursor.executemany(
       'INSERT INTO clientes.cliente (nome, telefone, endereco, ativo) VALUES (%s, %s, %s, %s)',
       [
-            ('Steve Rogers', '555', 'New York', True),
-            ('Bruce Banner', '555', 'New York', True),
-            ('Tony Stark', '555', 'New York', False),
-            ('James Rhodes', '555', 'New York', True),
-            ('Scott Lang', '555', 'New York', True),
-            ('Tchalla', '555', 'New York', True),
-            ('Peter Parker', '555', 'New York', True),
+            ('Steve Rogers', '985393982', 'New York', True),
+            ('Bruce Banner', '985393982', 'New York', True),
+            ('Tony Stark', '985393982', 'New York', False),
+            ('James Rhodes', '985393982', 'New York', True),
+            ('Scott Lang', '985393982', 'New York', True),
+            ('Tchalla', '985393982', 'New York', True),
+            ('Peter Parker', '985393982', 'New York', True),
             
       ])
 
