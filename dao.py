@@ -5,6 +5,7 @@ SQL_Cliente_POR_ID = 'SELECT id, nome, telefone, endereco, ativo from cliente wh
 SQL_USUARIO_POR_ID = 'SELECT id, nome, senha from usuario where id = %s'
 SQL_ATUALIZA_Cliente = 'UPDATE cliente SET nome=%s, telefone=%s, endereco=%s, ativo=%s where id = %s'
 SQL_BUSCA_ClienteS = 'SELECT id, nome, telefone, endereco, ativo from cliente'
+SQL_BUSCA_ClientesAtivos = 'SELECT id, nome, telefone, endereco from cliente where ativo = 1'
 SQL_CRIA_Cliente = 'INSERT into cliente (nome, telefone, endereco, ativo) values (%s, %s, %s, %s)'
 
 
@@ -39,7 +40,6 @@ class ClienteDao:
         self.__db.connection.cursor().execute(SQL_DELETA_Cliente, (id, ))
         self.__db.connection.commit()
 
-
 class UsuarioDao:
     def __init__(self, db):
         self.__db = db
@@ -50,7 +50,6 @@ class UsuarioDao:
         dados = cursor.fetchone()
         usuario = traduz_usuario(dados) if dados else None
         return usuario
-
 
 def traduz_Clientes(Clientes):
     def cria_Cliente_com_tupla(tupla):

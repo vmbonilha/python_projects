@@ -101,8 +101,8 @@ def export():
     si = StringIO()
     cw = csv.writer(si)
     lista = cliente_dao.listar()
-    #cw.writerow([i[0] for i in lista])
-    cw.writerow(lista)
+    for cliente in lista:
+        cw.writerow([cliente.nome, cliente.telefone, cliente.endereco, cliente.ativo])
     response = make_response(si.getvalue())
     response.headers['Content-Disposition'] = 'attachment; filename=report.csv'
     response.headers["Content-type"] = "text/csv"
