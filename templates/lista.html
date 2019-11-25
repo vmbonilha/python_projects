@@ -6,6 +6,7 @@
             <thead class="thead-default">
                 <tr>
                     <th>Nome</th>
+                    <th>CPF</th>
                     <th>Telefone</th>
                     <th>Endereço</th>
                     <th>Ativo</th>
@@ -16,6 +17,7 @@
                 {% for cliente in clientes %}
                 <tr>
                     <td>{{cliente.nome}}</td>
+                    <td>{{cliente.cpf}}</td>
                     <td>{{cliente.telefone}}</td>
                     <td>{{cliente.endereco}}</td>
                     <td>{{cliente.ativo}}</td>

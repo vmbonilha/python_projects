@@ -42,20 +42,22 @@ def editar(id):
 @app.route('/atualizar', methods=['POST'])
 def atualizar():
     nome = request.form['nome']
+    cpf = request.form['cpf']
     telefone = request.form['telefone']
     endereco = request.form['endereco']
     ativo = request.form['ativo']
-    cliente = Cliente(nome, telefone, endereco, ativo, id=request.form['id'])
+    cliente = Cliente(nome, cpf, telefone, endereco, ativo, id=request.form['id'])
     cliente_dao.salvar(cliente)
     return redirect(url_for('index'))
 
 @app.route('/criar', methods=['POST'])
 def criar():
     nome = request.form['nome']
+    cpf = request.form['cpf']
     telefone = request.form['telefone']
     endereco = request.form['endereco']
     ativo = request.form['ativo']
-    cliente = Cliente(nome, telefone, endereco, ativo)
+    cliente = Cliente(nome, cpf, telefone, endereco, ativo)
     cliente_dao.salvar(cliente)
     file = request.files['file']
     upload_path = app.config['UPLOAD_PATH']
@@ -102,9 +104,9 @@ def export():
     cw = csv.writer(si)
     lista = cliente_dao.listar()
     for cliente in lista:
-        cw.writerow([cliente.nome, cliente.telefone, cliente.endereco, cliente.ativo])
+        cw.writerow([cliente.nome, cliente.cpf, cliente.telefone, cliente.endereco, cliente.ativo])
     response = make_response(si.getvalue())
-    response.headers['Content-Disposition'] = 'attachment; filename=report.csv'
+    response.headers['Content-Disposition'] = 'attachment; filename=clientes.csv'
     response.headers["Content-type"] = "text/csv"
     return response
 
