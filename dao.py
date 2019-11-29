@@ -1,12 +1,13 @@
 from models import Cliente, Usuario
 
 SQL_DELETA_Cliente = 'delete from cliente where id = %s'
-SQL_Cliente_POR_ID = 'SELECT id, nome, cpf, telefone, endereco, ativo from cliente where id = %s'
+SQL_Cliente_POR_ID = 'SELECT id, nome, cpf, rg, milhas, telefone, endereco, ativo from cliente where id = %s'
 SQL_USUARIO_POR_ID = 'SELECT id, nome, senha from usuario where id = %s'
-SQL_ATUALIZA_Cliente = 'UPDATE cliente SET nome=%s, cpf=%s, telefone=%s, endereco=%s, ativo=%s where id = %s'
-SQL_BUSCA_ClienteS = 'SELECT id, nome, cpf, telefone, endereco, ativo from cliente'
-SQL_BUSCA_ClientesAtivos = 'SELECT id, nome, cpf, telefone, endereco from cliente where ativo = 1'
-SQL_CRIA_Cliente = 'INSERT into cliente (nome, cpf, telefone, endereco, ativo) values (%s, %s, %s, %s, %s)'
+SQL_ATUALIZA_Cliente = 'UPDATE cliente SET nome=%s, cpf=%s, rg=%s, milhas=%s, telefone=%s, endereco=%s, ativo=%s where id = %s'
+SQL_BUSCA_ClienteS = 'SELECT id, nome, cpf, rg, milhas, telefone, endereco, ativo from cliente'
+SQL_BUSCA_ClientesAtivos = 'SELECT id, nome, cpf, rg, milhas, telefone, endereco from cliente where ativo = 1'
+SQL_BUSCA_Exporta = 'SELECT id, nome, cpf, rg, milhas, telefone, endereco from cliente where ativo = 1'
+SQL_CRIA_Cliente = 'INSERT into cliente (nome, cpf, rg, milhas, telefone, endereco, ativo) values (%s, %s, %s, %s, %s, %s, %s)'
 
 class ClienteDao:
     def __init__(self, db):
@@ -16,9 +17,9 @@ class ClienteDao:
         cursor = self.__db.connection.cursor()
 
         if (Cliente.id):
-            cursor.execute(SQL_ATUALIZA_Cliente, (Cliente.nome, Cliente.cpf, Cliente.telefone, Cliente.endereco, Cliente.ativo, Cliente.id))
+            cursor.execute(SQL_ATUALIZA_Cliente, (Cliente.nome, Cliente.cpf, Cliente.rg, Cliente.milhas, Cliente.telefone, Cliente.endereco, Cliente.ativo, Cliente.id))
         else:
-            cursor.execute(SQL_CRIA_Cliente, (Cliente.nome, Cliente.cpf, Cliente.telefone, Cliente.endereco, Cliente.ativo))
+            cursor.execute(SQL_CRIA_Cliente, (Cliente.nome, Cliente.cpf, Cliente.rg, Cliente.milhas, Cliente.telefone, Cliente.endereco, Cliente.ativo))
             Cliente.id = cursor.lastrowid
         self.__db.connection.commit()
         return Cliente
@@ -33,7 +34,7 @@ class ClienteDao:
         cursor = self.__db.connection.cursor()
         cursor.execute(SQL_Cliente_POR_ID, (id,))
         tupla = cursor.fetchone()
-        return Cliente(tupla[1], tupla[2], tupla[3], tupla[4], tupla[5], id=tupla[0])
+        return Cliente(tupla[1], tupla[2], tupla[3], tupla[4], tupla[5], tupla[6], tupla[7], id=tupla[0])
 
     def deletar(self, id):
         self.__db.connection.cursor().execute(SQL_DELETA_Cliente, (id, ))
@@ -52,7 +53,7 @@ class UsuarioDao:
 
 def traduz_Clientes(Clientes):
     def cria_Cliente_com_tupla(tupla):
-        return Cliente(tupla[1], tupla[2], tupla[3], tupla[4], tupla[5], id=tupla[0])
+        return Cliente(tupla[1], tupla[2], tupla[3], tupla[4], tupla[5], tupla[6], tupla[7], id=tupla[0])
     return list(map(cria_Cliente_com_tupla, Clientes))
 
 def traduz_usuario(tupla):

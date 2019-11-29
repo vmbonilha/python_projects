@@ -43,10 +43,12 @@ def editar(id):
 def atualizar():
     nome = request.form['nome']
     cpf = request.form['cpf']
+    rg = request.form['rg']
+    milhas = request.form['milhas']
     telefone = request.form['telefone']
     endereco = request.form['endereco']
     ativo = request.form['ativo']
-    cliente = Cliente(nome, cpf, telefone, endereco, ativo, id=request.form['id'])
+    cliente = Cliente(nome, cpf, rg, milhas, telefone, endereco, ativo, id=request.form['id'])
     cliente_dao.salvar(cliente)
     return redirect(url_for('index'))
 
@@ -54,10 +56,12 @@ def atualizar():
 def criar():
     nome = request.form['nome']
     cpf = request.form['cpf']
+    rg = request.form['rg']
+    milhas = request.form['milhas']
     telefone = request.form['telefone']
     endereco = request.form['endereco']
     ativo = request.form['ativo']
-    cliente = Cliente(nome, cpf, telefone, endereco, ativo)
+    cliente = Cliente(nome, cpf, rg, milhas, telefone, endereco, ativo)
     cliente_dao.salvar(cliente)
     file = request.files['file']
     upload_path = app.config['UPLOAD_PATH']
@@ -104,7 +108,7 @@ def export():
     cw = csv.writer(si)
     lista = cliente_dao.listar()
     for cliente in lista:
-        cw.writerow([cliente.nome, cliente.cpf, cliente.telefone, cliente.endereco, cliente.ativo])
+        cw.writerow([cliente.id, cliente.nome, cliente.cpf, cliente.telefone, cliente.endereco, cliente.ativo])
     response = make_response(si.getvalue())
     response.headers['Content-Disposition'] = 'attachment; filename=clientes.csv'
     response.headers["Content-type"] = "text/csv"

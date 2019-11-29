@@ -13,6 +13,8 @@ criar_tabelas = '''SET NAMES utf8;
       `id` int(11) NOT NULL AUTO_INCREMENT,
       `nome` varchar(50) COLLATE utf8_bin NOT NULL,
       `cpf` varchar(11) COLLATE utf8_bin NOT NULL,
+      `rg` varchar(11) COLLATE utf8_bin NOT NULL,
+      `milhas` varchar(11) COLLATE utf8_bin NOT NULL,
       `telefone` varchar(12) COLLATE utf8_bin NOT NULL,
       `endereco` varchar(30) COLLATE utf8_bin NOT NULL,
       `ativo` boolean,
@@ -44,15 +46,15 @@ for user in cursor.fetchall():
 
 # inserindo clientes
 cursor.executemany(
-      'INSERT INTO clientes.cliente (nome, cpf, telefone, endereco, ativo) VALUES (%s, %s, %s, %s, %s)',
+      'INSERT INTO clientes.cliente (nome, cpf, rg, milhas, telefone, endereco, ativo) VALUES (%s, %s, %s, %s, %s, %s, %s)',
       [
-            ('Steve Rogers', '01725789060', '985393982', 'Brooklyn, New York', True),
-            ('Bruce Banner', '01725789060', '985393982', 'New York', True),
-            ('Tony Stark', '01725789060', '985393982', 'New York', False),
-            ('James Rhodes', '01725789060', '985393982', 'New York', True),
-            ('Scott Lang', '01725789060', '985393982', 'New York', True),
-            ('Tchalla', '01725789060', '985393982', 'Wakanda', True),
-            ('Peter Parker', '01725789060', '985393982', 'Queens, New York', True),
+            ('Steve Rogers', '01725789060', '2093016406', '1234', '985393982', 'Brooklyn, New York', True),
+            ('Bruce Banner', '01725789060', '2093016406', '1234', '985393982', 'New York', True),
+            ('Tony Stark', '01725789060', '2093016406', '1234', '985393982', 'New York', False),
+            ('James Rhodes', '01725789060', '2093016406', '1234', '985393982', 'New York', True),
+            ('Scott Lang', '01725789060', '2093016406', '1234', '985393982', 'New York', True),
+            ('Tchalla', '01725789060', '2093016406', '1234', '985393982', 'Wakanda', True),
+            ('Peter Parker', '01725789060', '2093016406', '1234', '985393982', 'Queens, New York', True),
             
       ])
 
