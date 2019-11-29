@@ -63,9 +63,6 @@ def criar():
     ativo = request.form['ativo']
     cliente = Cliente(nome, cpf, rg, milhas, telefone, endereco, ativo)
     cliente_dao.salvar(cliente)
-    file = request.files['file']
-    upload_path = app.config['UPLOAD_PATH']
-    file.save(f'{upload_path}/capa{cliente.id}.jpg')
     return redirect(url_for('index'))
 
 @app.route('/login')

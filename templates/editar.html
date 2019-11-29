@@ -5,31 +5,31 @@
             <input type="hidden" name="id" id="=id" value="{{ cliente.id }}">
           <div class="form-group">
             <label for="nome">Nome</label>
-            <input type="text" id="nome" name="nome" class="form-control" value="{{ cliente.nome }}">
+            <input type="text" id="nome" name="nome" required maxlength="50" class="form-control" value="{{ cliente.nome }}">
           </div>
           <div class="form-group">
             <label for="cpf">CPF</label>
-            <input type="text" id="cpf" name="cpf" class="form-control" value="{{ cliente.cpf }}">
+            <input type="text" id="cpf" name="cpf" required maxlength="11" class="form-control" value="{{ cliente.cpf }}">
           </div>
           <div class="form-group">
             <label for="rg">RG</label>
-            <input type="text" id="rg" name="rg" class="form-control" value="{{ cliente.rg }}">
+            <input type="text" id="rg" name="rg" required maxlength="10" class="form-control" value="{{ cliente.rg }}">
           </div>
           <div class="form-group">
             <label for="milhas">Milhas</label>
-            <input type="text" id="milhas" name="milhas" class="form-control" value="{{ cliente.milhas }}">
+            <input type="text" id="milhas" name="milhas" required maxlength="10" class="form-control" value="{{ cliente.milhas }}">
           </div>
           <div class="form-group">
             <label for="telefone">Telefone</label>
-            <input type="text" id="telefone" name="telefone" class="form-control" value="{{ cliente.telefone }}">
+            <input type="text" id="telefone" name="telefone" required maxlength="12" class="form-control" value="{{ cliente.telefone }}">
           </div>
           <div class="form-group">
             <label for="endereco">Endereço</label>
-            <input type="text" id="endereco" name="endereco" class="form-control" value="{{ cliente.endereco }}">
+            <input type="text" id="endereco" name="endereco" required maxlength="30" class="form-control" value="{{ cliente.endereco }}">
           </div>
           <div class="form-group">
             <label for="ativo">Ativo</label>
-            <input type="text" id="ativo" name="ativo" class="form-control" value="{{ cliente.ativo }}">
+            <input type="text" id="ativo" name="ativo" required maxlength="1" onkeypress='return event.charCode >= 48 && event.charCode <= 49' class="form-control" value="{{ cliente.ativo }}">
           </div>
           <button type="submit" class="btn btn-primary btn-salvar">Salvar</button>
           <a class="btn btn-danger" href="{{ url_for('index') }}">Voltar</a>
